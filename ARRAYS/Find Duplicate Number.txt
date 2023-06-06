@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        // Brute: SORT the array, for duplicate element its next element will b same
+        // TIME: O(NlogN)  SPACE: O(1)
+
+        // OPTIMAL SOLUTION: HASHING, create a frequency array of same size as nums & initialize each element in it as 0
+        // TIME: O(N)   SPACE: O(N)
+
+        // MORE OPTIMAL: HARE & TOTTOISE METHOD where hare moves 1 step,tortoise moves 2 steps    TIME-> O(N) SPACE-> O(1)
+        int slowptr=nums[0];
+        int fastptr=nums[0];
+        // using do while as slow & fast will move first steps without any condition checking
+        do{
+            slowptr=nums[slowptr];        //moving slow ptr by 1 step
+            fastptr=nums[nums[fastptr]];  // moving fast ptr by 2 steps
+        }while(slowptr!=fastptr);         // will b moving them till they meet
+
+        // here both slow & fast are at same element,so put fast at 1st element & move both slow & fast by 1 step, and now again when they meet at same point is our answer i.e. duplicate number    
+        fastptr=nums[0];
+        while(slowptr!=fastptr)
+        {
+            slowptr=nums[slowptr];
+            fastptr=nums[fastptr];
+        }
+        return slowptr;
+    }
+};

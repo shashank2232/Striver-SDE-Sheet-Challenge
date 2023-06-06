@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        // BRUTE APPROACH: 2-pointer (i at 0th index & j start from 1st index till the last)
+        // store the difference if at any point prices[j] > prices[i]
+        // TIME: O(Nsquare) SPACE: O(1)
+        
+        // Optimal approach : TIME -> O(N)  SPACE: O(1)
+        // for each element we knew the minimum stock value on the left
+        // we get the minimum on the left side
+        int minimum=INT_MAX;
+        int maxProfit=0;
+        for(int i=0;i<prices.size();i++)
+        {
+            // updating minimum at every stage
+            minimum=min(minimum,prices[i]);
+            // here we're trying to sell it -> (prices[i] - minimum) is our profit & we compare it with maxProfit, if its greater we update maxProfit with it
+            maxProfit = max(maxProfit,prices[i] - minimum);
+        }
+        return maxProfit;
+
+
+    }
+};
