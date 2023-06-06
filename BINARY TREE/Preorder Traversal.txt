@@ -1,0 +1,38 @@
+void preorder(TreeNode* root, vector<int>& nodes) {
+        if (root==NULL) {
+            return;
+        }
+        nodes.push_back(root -> data);
+        preorder(root -> left, nodes);
+        preorder(root -> right, nodes);
+    }
+vector<int> getPreOrderTraversal(TreeNode *root)
+{
+    // iterative way
+        // vector<int>ans;
+        // if(root==NULL)
+        //     return ans;
+        // stack<TreeNode*>s;
+        // s.push(root);
+        // while(!s.empty())
+        // {
+        //     // take the top,pop it, then see for right first and then left(first right as stack works on LIFO last in first out)
+        //     root = s.top();
+        //     s.pop();
+        //     ans.push_back(root->data);            // putting the value inside answer vector
+        //     if(root->right != NULL)             // first we r going right as stack uses LIFO whichever goes last comes out first, hence right first then left
+        //     {
+        //         s.push(root->right);
+        //     }
+        //     if(root->left != NULL)
+        //     {
+        //         s.push(root->left);
+        //     }
+        // }
+        // return ans;
+
+        // recursive way
+        vector<int> nodes;
+        preorder(root, nodes);
+        return nodes;
+}
