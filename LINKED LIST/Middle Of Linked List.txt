@@ -1,0 +1,19 @@
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        // if linked list is empty or having only a single node
+        if(head==NULL || head->next==NULL)
+        {
+            return head;
+        }
+        
+        ListNode*slowptr=head;
+        ListNode*fastptr=head;
+        while(fastptr!=NULL && fastptr->next!=NULL)
+        {
+            slowptr=slowptr->next;
+            fastptr=fastptr->next->next;
+        }
+        return slowptr;
+    }
+};
