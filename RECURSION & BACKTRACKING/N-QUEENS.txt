@@ -1,0 +1,74 @@
+class Solution {
+    bool isSafe(int row,int col,vector<string>board,int n)
+    {
+        int a=row;       
+        int b=col;
+        // upper left diagonal 
+        while(row>=0 && col>=0)
+        {
+            if(board[row][col]=='Q')
+            {
+                return false;
+            }
+            row--;
+            col--;
+        }
+        row=a;              // initializing again to start & check with original value, not the modified one
+        col=b;              // initializing again to start & check with original value, not the modified one
+        // lower left diagonal
+        while(row<n && col>=0)
+        {
+            if(board[row][col]=='Q')
+            {
+                return false;
+            }
+            row++; 
+            col--;
+        }
+        row=a;                  // initializing again to start & check with original value, not the modified one
+        col=b;                  // initializing again to start & check with original value, not the modified one
+        // left
+        while(col>=0)
+        {
+            if(board[row][col]=='Q')
+            {
+                return false;
+            }
+            col--;
+        }
+        return true;
+    }
+     public:
+    // ans & board are passed by reference
+    void solve(int col,vector<vector<string>>&ans,vector<string>&board,int n)
+    {
+        // base case(if pointer crosses n i.e. we are out of board, store board into answer & return for next possible solution (if any))
+        if(col==n)
+        {
+            ans.push_back(board);
+            return;
+        }
+        // rec case
+        // for loop for each row one by one
+        for(int row=0;row<n;row++)
+        {
+            if(isSafe(row,col,board,n))  // will return true if its safe to put a queen,else false
+            {
+                board[row][col]='Q';       // place Queen there
+                solve(col+1,ans,board,n);   // solve for next column
+                board[row][col]='.';       // BACKTRACKING STEP (removing queen to find another possible solution)
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+       vector<vector<string>>ans;
+       vector<string>board(n);   // this will have vector of strings with all values empty i.e. '.'
+       string s(n,'.');         // this is used to fill board with '.'
+       for(int i=0;i<n;i++)
+       {
+           board[i]=s;
+       }
+       solve(0,ans,board,n);    // 0 is for column 
+        return ans;
+    }
+};
