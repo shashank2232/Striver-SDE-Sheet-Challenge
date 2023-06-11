@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> mp;      // declaring hash table to store element with its index
+        vector<int>ans;
+        for(int i=0;i<nums.size();i++){
+            int secondElement = target - nums[i];     // we have to search this element further
+            
+            // checking if remaining second value exists in HASH TABLE or not
+            // if it exists,it'll never point to the end of HASH TABLE
+            // mp.end() means an iterator pointing to a place right after the last element in the HASH TABLE
+            if(mp.find(secondElement) != mp.end()){
+            // since element is found, put its index & current element's index in our ans vector and return answer (here mp[secondElement] gives us the index of secondElement from mp)
+                ans.push_back(mp[secondElement]);
+                ans.push_back(i);
+                return ans;         // since we need only 1 solution
+            }
+            // not exists, store current element i.e. nums[i] in HASH TABLE with its index 
+            else{
+                mp[nums[i]] = i;
+            }
+        }
+        return ans;
+    }
+};
+// TIME: O(N)   SPACE: O(N)    to store values in HASH TABLE
