@@ -1,0 +1,100 @@
+// THREE SUM
+
+1) BRUTE APPROACH:  TIME: O(Ncube)
+vector<vector<int>> triplet(int n,vector<int>&num)
+{
+    set<vector<int>>st;
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            for(int k=j+1;k<n;k++){
+                if(num[i] + num[j] + num[k] == 0){
+                    vector<int>temp = {num[i],num[j],num[k]};
+                    sort(temp.begin(),temp.end());
+                    st.insert(temp);
+                }
+            }
+        }
+    }
+    vector<vector<int>>ans(st.begin(),st.end());
+}
+
+2) OPTIMAL APPROACH: Using Hashset  TIME: O(Nsquare)
+vector<vector<int>> triplet(int n,vector<int>&num)
+{
+        int n = nums.size();
+        set<vector<int>>st;
+        for(int i=0;i<n;i++){
+            set<int>hashset;
+            for(int j=i+1;j<n;j++){
+                int third = -(nums[i] + nums[j]);
+                if(hashset.find(third) != hashset.end()){
+                    vector<int> temp = {nums[i],nums[j],third};
+                    sort(temp.begin(),temp.end());
+                    st.insert(temp);
+                }
+                hashset.insert(nums[j]);
+            }
+        }
+        vector<vector<int>>ans(st.begin(),st.end());
+        return ans;
+}
+
+3) MOST OPTIMAL(2-pointer without using Set):
+vector<vector<int>> triplet(int n, vector<int> &arr)
+{
+    vector<vector<int>> ans;
+    sort(arr.begin(),arr.end());
+    for(int i=0;i<n;i++){
+        // we know that if i is same as previous element then we will get same answer,so if arr[i] == arr[i-1] just continue to next i i.e. i++
+        if(i>0 && arr[i] == arr[i-1]){
+            continue;
+        }
+        int j = i+1;
+        int k = n-1;
+        // we have to perform sum till j not reaches k
+        while(j < k){
+            int sum = arr[i] + arr[j] + arr[k];
+            // since our sum is less than 0,move j forwards to get a higher number to equal sum to 0
+            if(sum < 0){
+                j++;
+            }
+            // since our sum is greater than 0,move k back to get a lesser number to equal sum to 0
+            else if(sum > 0){
+                k--;
+            }
+            else{
+                vector<int> temp = {arr[i],arr[j],arr[k]};
+                ans.push_back(temp);
+                // now since we got one of our triplets,move j and k
+                j++;
+                k--;
+                // now after 1st iteration/triplet formed, j moves again to 0 and k moves again to 2
+                // now they don't give us another same triplet, we want j to b at number different from its previous,same for k
+                // keep moving j and k till they aren't equal to their previous element
+                while(j<k && arr[j] == arr[j-1]){
+                    j++;
+                }
+                while(j<k && arr[k] == arr[k+1]){
+                    k--;
+                }
+            }
+
+        }
+    }
+    return ans;
+}
+// TIME: O(NlogN) for sorting + O(N) for loop * O(N) for while loop(nearabout O(N))
+// TIME: O(NlogN) + O(Nsquare)
+// SPACE: O(number of unique triplets)
+
+
+
+
+
+
+
+
+
+
+
+
